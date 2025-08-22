@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Recuperar Senha</title>
+  <link rel="stylesheet" href="login-style.css">
+  <link rel="shortcut icon" href="Imagens/icons8-favicon-94.png"/>
+
+</head>
+<body>
+  <div class="login-container">
+    <h2>🔐 Recuperar Senha</h2>
+    <form id="recuperarForm">
+      <label for="email">Digite seu email:</label>
+      <input type="email" id="email" required>
+
+      <label for="novaSenha">Nova senha:</label>
+      <input type="password" id="novaSenha" required>
+
+      <button type="submit">Redefinir Senha</button>
+    </form>
+    <p class="cadastro-texto">
+      <a href="login.html">Voltar para o login</a>
+    </p>
+  </div>
+
+  <script>
+    document.getElementById('recuperarForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const email = document.getElementById('email').value.trim();
+      const novaSenha = document.getElementById('novaSenha').value;
+
+      const usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
+      const index = usuarios.findIndex(u => u.email === email);
+
+      if (index === -1) {
+        alert('Email não encontrado.');
+        return;
+      }
+
+      usuarios[index].senha = novaSenha;
+      localStorage.setItem('usuarios', JSON.stringify(usuarios));
+
+      alert('Senha redefinida com sucesso! Redirecionando para o login...');
+      window.location.href = 'login.html';
+    });
+  </script>
+</body>
+</html>
